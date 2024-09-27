@@ -1,0 +1,35 @@
+[package]
+name = "dioxus-todo-fullstack"
+version = "0.1.0"
+authors = ["Yu Chen <rabbit19981023@gmail.com>"]
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+# Debug
+dioxus-logger = "0.5.1"
+
+dioxus = { version = "0.5.6", features = ["fullstack", "router"] }
+serde = { version = "1.0.210", features = ["derive"] }
+
+tokio = { version = "1.40.0", features = ["full"], optional = true }
+sqlx = { version = "0.8.2", features = [
+  "postgres",
+  "runtime-tokio",
+  "tls-rustls",
+], optional = true }
+
+[features]
+default = []
+server = ["dioxus/axum", "tokio", "sqlx"]
+web = ["dioxus/web"]
+
+[profile.release]
+opt-level = "z"
+debug = false
+lto = true
+codegen-units = 1
+panic = "abort"
+strip = true
+incremental = false
