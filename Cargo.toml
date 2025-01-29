@@ -7,23 +7,30 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-# Debug
-dioxus-logger = "0.5.1"
-
-dioxus = { version = "0.5.6", features = ["fullstack", "router"] }
+dioxus = { version = "0.6.2", features = ["fullstack", "router", "logger"] }
 serde = { version = "1.0.210", features = ["derive"] }
 
 tokio = { version = "1.40.0", features = ["full"], optional = true }
 sqlx = { version = "0.8.2", features = [
-  "postgres",
   "runtime-tokio",
   "tls-rustls",
+  "postgres",
 ], optional = true }
 
 [features]
 default = []
-server = ["dioxus/axum", "tokio", "sqlx"]
+server = ["dioxus/server", "tokio", "sqlx"]
 web = ["dioxus/web"]
+
+[profile.wasm-dev]
+inherits = "dev"
+opt-level = 0
+
+[profile.server-dev]
+inherits = "dev"
+
+[profile.android-dev]
+inherits = "dev"
 
 [profile.release]
 opt-level = "z"

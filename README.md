@@ -14,7 +14,7 @@ sqlx migrate run --database-url postgres://postgres:postgres@localhost:5432/post
 3. Compile tailwind:
 
 ```bash
-npx tailwindcss -i ./input.css -o ./assets/tailwind.css
+npx @tailwindcss/cli -i ./input.css -o ./assets/tailwind.css
 ```
 
 4. Launch app with hot realod:
@@ -22,4 +22,3 @@ npx tailwindcss -i ./input.css -o ./assets/tailwind.css
 ```bash
 DATABASE_URL=postgres://postgres:postgres@localhost:5432/postgres dx serve
 ```
-
