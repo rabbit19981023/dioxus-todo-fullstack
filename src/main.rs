@@ -18,17 +18,17 @@ const FAVICON: Asset = asset!("/assets/favicon.ico");
 const MAIN_CSS: Asset = asset!("/assets/main.css");
 const TAILWIND_CSS: Asset = asset!("/assets/tailwind.css");
 
-#[derive(Clone, Routable)]
-enum Route {
-    #[route("/")]
-    Home {},
-}
-
 fn main() {
     // Init logger
     logger::init(tracing::Level::INFO).expect("failed to init logger");
     tracing::info!("starting app");
     launch(App);
+}
+
+#[derive(Clone, Routable)]
+enum Route {
+    #[route("/")]
+    Home {},
 }
 
 fn App() -> Element {

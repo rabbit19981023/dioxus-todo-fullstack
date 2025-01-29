@@ -1,8 +1,7 @@
 use crate::models::Todo;
 use crate::server_functions::*;
 
-use dioxus::logger::tracing;
-use dioxus::prelude::*;
+use dioxus::{logger::tracing, prelude::*};
 
 static TODOS: GlobalSignal<Vec<Todo>> = GlobalSignal::new(Vec::new);
 
