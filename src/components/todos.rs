@@ -1,9 +1,9 @@
-use crate::models::Todo;
+use crate::models;
 use crate::server_functions::*;
 
 use dioxus::{logger::tracing, prelude::*};
 
-static TODOS: GlobalSignal<Vec<Todo>> = GlobalSignal::new(Vec::new);
+static TODOS: GlobalSignal<Vec<models::Todo>> = GlobalSignal::new(Vec::new);
 
 #[component]
 pub fn AddTodo() -> Element {
@@ -21,7 +21,7 @@ pub fn AddTodo() -> Element {
                 class: "border p-1 rounded-sm",
                 onclick: move |_| async move {
                     match create_todo(title()).await {
-                        Ok(id) => TODOS.write().push(Todo::new(id, title())),
+                        Ok(id) => TODOS.write().push(models::Todo::new(id, title())),
                         Err(err) => tracing::error!("create todo error: {err}"),
                     }
                 },
@@ -44,7 +44,7 @@ pub fn Todos() -> Element {
         Some(_) if !TODOS().is_empty() => {
             rsx! {
                 for todo in TODOS() {
-                    TodoComponent { key: "{todo.id}", todo }
+                    Todo { key: "{todo.id}", todo }
                 }
             }
         }
@@ -53,7 +53,7 @@ pub fn Todos() -> Element {
 }
 
 #[component]
-fn TodoComponent(todo: Todo) -> Element {
+fn Todo(todo: models::Todo) -> Element {
     let mut title = use_signal(|| todo.title);
     let mut completed = use_signal(|| todo.completed);
 
