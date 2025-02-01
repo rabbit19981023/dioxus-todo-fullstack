@@ -1,0 +1,14 @@
+[package]
+name = "app"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+dioxus = { workspace = true, features = ["router"] }
+
+server = { workspace = true }
+shared = { workspace = true }
+
+[features]
+web = ["dioxus/web"]
+server = ["dioxus/server", "server/db"]

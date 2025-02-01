@@ -1,9 +1,8 @@
-#[cfg(feature = "server")]
+#[cfg(feature = "db")]
 use crate::database::get_db;
 
-use crate::models::Todo;
-
 use dioxus::prelude::*;
+use shared::models::Todo;
 
 #[server]
 pub async fn get_all_todos() -> Result<Vec<Todo>, ServerFnError> {

@@ -1,9 +1,49 @@
-use crate::models;
-use crate::server_functions::*;
+#![allow(non_snake_case)]
 
-use dioxus::{logger::tracing, prelude::*};
+use dioxus::{
+    logger::{self, tracing},
+    prelude::*,
+};
+use server::server_functions::{create_todo, delete_todo, get_all_todos, update_todo};
+use shared::models;
+
+const FAVICON: Asset = asset!("/assets/favicon.ico");
+const MAIN_CSS: Asset = asset!("/assets/main.css");
+const TAILWIND_CSS: Asset = asset!("/assets/tailwind.css");
 
 static TODOS: GlobalSignal<Vec<models::Todo>> = GlobalSignal::new(Vec::new);
+
+fn main() {
+    logger::init(tracing::Level::INFO).expect("failed to init logger");
+    tracing::info!("starting app");
+    launch(App);
+}
+
+#[derive(Clone, Routable)]
+enum Route {
+    #[route("/")]
+    Home {},
+}
+
+fn App() -> Element {
+    rsx! {
+        document::Link { rel: "icon", href: FAVICON }
+        document::Link { rel: "stylesheet", href: MAIN_CSS }
+        document::Link { rel: "stylesheet", href: TAILWIND_CSS }
+
+        Router::<Route> {}
+    }
+}
+
+#[component]
+fn Home() -> Element {
+    rsx! {
+        div { class: "h-screen flex flex-col justify-center items-center",
+            AddTodo {}
+            Todos {}
+        }
+    }
+}
 
 #[component]
 pub fn AddTodo() -> Element {

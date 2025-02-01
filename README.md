@@ -11,13 +11,19 @@ cargo install sqlx-cli
 sqlx migrate run --database-url postgres://postgres:postgres@localhost:5432/postgres
 ```
 
-3. Compile tailwind:
+3. Get into `app/` directory (IMPORTANT!):
+
+```bash
+cd app/
+```
+
+4. Compile tailwind:
 
 ```bash
 npx @tailwindcss/cli -i ./input.css -o ./assets/tailwind.css
 ```
 
-4. Launch app with hot realod:
+5. Launch app with hot realod:
 
 ```bash
 DATABASE_URL=postgres://postgres:postgres@localhost:5432/postgres dx serve
