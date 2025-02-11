@@ -10,3 +10,6 @@ app/assets/tailwind.css
 
 # Database
 /.postgres-data/
+
+# dependencies
+node_modules/

@@ -20,7 +20,8 @@ cd app/
 4. Compile tailwind:
 
 ```bash
-npx @tailwindcss/cli -i ./input.css -o ./assets/tailwind.css
+npm install
+npm run tailwind:build
 ```
 
 5. Launch app with hot realod:
