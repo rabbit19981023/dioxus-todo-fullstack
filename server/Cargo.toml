@@ -7,7 +7,11 @@ edition = "2021"
 dioxus = { workspace = true, features = ["fullstack"] }
 shared = { workspace = true }
 
-tokio = { version = "1.43.0", features = ["full"], optional = true }
+tokio = { version = "1.43.0", features = [
+  "parking_lot",
+  "rt-multi-thread",
+  "macros",
+], optional = true }
 sqlx = { version = "0.8.3", features = [
   "runtime-tokio",
   "tls-rustls",

@@ -3,9 +3,8 @@ resolver = "2"
 members = ["app", "server", "shared"]
 
 [workspace.dependencies]
-dioxus = "0.6.2"
+dioxus = { version = "0.6.2", default-features = false }
 
-app = { path = "app" }
 server = { path = "server" }
 shared = { path = "shared" }
 

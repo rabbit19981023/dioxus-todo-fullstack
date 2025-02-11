@@ -4,7 +4,17 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-dioxus = { workspace = true, features = ["router"] }
+dioxus = { workspace = true, features = [
+  "html",
+  "document",
+  "macro",
+  "signals",
+  "hooks",
+  "asset",
+  "logger",
+  "launch",
+  "router",
+] }
 
 server = { workspace = true }
 shared = { workspace = true }
