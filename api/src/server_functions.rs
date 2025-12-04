@@ -1,11 +1,11 @@
-#[cfg(feature = "db")]
+#[cfg(feature = "server")]
 use crate::database::get_db;
 
-use dioxus::prelude::*;
+use dioxus::{CapturedError, prelude::*};
 use shared::models::Todo;
 
-#[server]
-pub async fn get_all_todos() -> Result<Vec<Todo>, ServerFnError> {
+#[get("/api/todos")]
+pub async fn get_all_todos() -> Result<Vec<Todo>> {
     let db = get_db().await;
 
     let result = sqlx::query_as!(Todo, "SELECT * FROM todos")
@@ -15,8 +15,8 @@ pub async fn get_all_todos() -> Result<Vec<Todo>, ServerFnError> {
     Ok(result)
 }
 
-#[server]
-pub async fn find_todo(id: i32) -> Result<Todo, ServerFnError> {
+#[get("/api/todos/:id")]
+pub async fn find_todo(id: i32) -> Result<Todo> {
     let db = get_db().await;
 
     let result = sqlx::query_as!(Todo, "SELECT * FROM todos WHERE id = $1", id)
@@ -26,8 +26,8 @@ pub async fn find_todo(id: i32) -> Result<Todo, ServerFnError> {
     Ok(result)
 }
 
-#[server]
-pub async fn create_todo(title: String) -> Result<i32, ServerFnError> {
+#[post("/api/todos")]
+pub async fn create_todo(title: String) -> Result<i32> {
     let db = get_db().await;
 
     let row = sqlx::query!("INSERT INTO todos (title) VALUES ($1) RETURNING id", title)
@@ -37,8 +37,8 @@ pub async fn create_todo(title: String) -> Result<i32, ServerFnError> {
     Ok(row.id)
 }
 
-#[server]
-pub async fn delete_todo(id: i32) -> Result<(), ServerFnError> {
+#[delete("/api/todos/:id")]
+pub async fn delete_todo(id: i32) -> Result<()> {
     let db = get_db().await;
 
     let result = sqlx::query!("DELETE FROM todos WHERE id = $1", id)
@@ -46,13 +46,13 @@ pub async fn delete_todo(id: i32) -> Result<(), ServerFnError> {
         .await?;
 
     match result.rows_affected() {
-        0 => Err(ServerFnError::Request("No rows deleted".to_string())),
+        0 => Err(CapturedError::msg("No rows deleted")),
         _ => Ok(()),
     }
 }
 
-#[server]
-pub async fn update_todo(id: i32, title: String, completed: bool) -> Result<(), ServerFnError> {
+#[put("/api/todos/:id")]
+pub async fn update_todo(id: i32, title: String, completed: bool) -> Result<()> {
     let db = get_db().await;
 
     let result = sqlx::query!(
@@ -65,7 +65,7 @@ pub async fn update_todo(id: i32, title: String, completed: bool) -> Result<(), 
     .await?;
 
     match result.rows_affected() {
-        0 => Err(ServerFnError::Request("No rows updated".to_string())),
+        0 => Err(CapturedError::msg("No rows updated")),
         _ => Ok(()),
     }
 }

@@ -1,7 +1,7 @@
 [package]
-name = "app"
+name = "web"
 version = "0.1.0"
-edition = "2021"
+edition = "2024"
 
 [dependencies]
 dioxus = { workspace = true, features = [
@@ -14,11 +14,12 @@ dioxus = { workspace = true, features = [
   "logger",
   "launch",
   "router",
+  "fullstack",
 ] }
 
-server = { workspace = true }
+api = { workspace = true }
 shared = { workspace = true }
 
 [features]
 web = ["dioxus/web"]
-server = ["dioxus/server", "server/db"]
+server = ["api/server"]

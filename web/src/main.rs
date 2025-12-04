@@ -1,10 +1,8 @@
-#![allow(non_snake_case)]
-
+use api::server_functions::{create_todo, delete_todo, get_all_todos, update_todo};
 use dioxus::{
     logger::{self, tracing},
     prelude::*,
 };
-use server::server_functions::{create_todo, delete_todo, get_all_todos, update_todo};
 use shared::models;
 
 const FAVICON: Asset = asset!("/assets/favicon.ico");
@@ -25,6 +23,7 @@ enum Route {
     Home {},
 }
 
+#[component]
 fn App() -> Element {
     rsx! {
         document::Link { rel: "icon", href: FAVICON }
