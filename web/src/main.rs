@@ -74,7 +74,7 @@ pub fn AddTodo() -> Element {
 pub fn Todos() -> Element {
     let resource = use_resource(|| async {
         match get_all_todos().await {
-            Ok(todos) => *TODOS.write() = todos,
+            Ok(todos) => TODOS.write().extend(todos),
             Err(err) => tracing::error!("get all todos error: {err}"),
         }
     });
