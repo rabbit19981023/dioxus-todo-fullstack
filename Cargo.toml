@@ -3,7 +3,7 @@ resolver = "3"
 members = ["web", "api", "shared"]
 
 [workspace.dependencies]
-dioxus = { version = "0.7.1", default-features = false }
+dioxus = { version = "0.7.2", default-features = false }
 
 api = { path = "api" }
 shared = { path = "shared" }
